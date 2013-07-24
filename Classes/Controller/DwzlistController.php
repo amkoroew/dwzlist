@@ -1,4 +1,6 @@
 <?php
+namespace MFG\MfgDwzlist\Controller;
+
 /***************************************************************
  *  Copyright notice
  *  (c) 2013 Matthias Gugel <mail@matthias-gugel.de>
@@ -17,8 +19,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-namespace MFG\Dwzlist\Controller;
-
 /**
  * Base controller
  *
@@ -32,6 +32,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function showAction() {
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('test', 'Hello, World!');
 		$this->view->assign('test', 'Hello, World!');
 	}
 }
