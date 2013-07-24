@@ -7,7 +7,7 @@ if (!defined('TYPO3_MODE')) {
 	'MFG.' . $_EXTKEY,
 	'Dwzlist',
 	array(
-		'Dwzlist' => 'show'
+		'Dwzlist' => 'list'
 	),
 	// non-cacheable actions
 	array(

@@ -26,14 +26,58 @@ namespace MFG\MfgDwzlist\Controller;
  * @subpackage mfg_dwzlist
  */
 class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+
 	/**
-	 * Single view of a Club
+	 * 
+	 */
+	private $dateOfLastUpdate = NULL;
+
+	/**
+	 * 
+	 */
+	private $members = NULL;
+
+	/**
+	 * 
+	 */
+	public function parseClubCSV($zps) {
+		$fp = fopen('http://www.schachbund.de/dwz/db/verein-csv.php?zps=' . $zps, 'r');
+		if ($fp !== FALSE) {
+			$keys = array('clubNumber', 'memberNumber', 'state', 'name', 'gender', 'birthYear', 'fideTitle', 'weekOfLastEvaluation', 'dwz', 'dwzIndex', 'elo');
+			$this->dateOfLastUpdate = fgets($fp);
+			while(!feof($fp)) {
+				$tmp = array_combine($keys, fgetcsv($fp, 1024, '|'));
+				if ($tmp !== FALSE) {
+					$this->members[] = $tmp;
+				}
+			}
+			fclose($fp);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public function convert2utf8() {
+		foreach($this->members as &$member) {
+			foreach($member as &$data) {
+				$data = iconv('ISO-8859-1', 'UTF-8', $data);
+			}
+		}
+	}
+
+	/**
+	 * List all members of a Club
 	 *
 	 * @return void
 	 */
-	public function showAction() {
-\TYPO3\CMS\Core\Utility\DebugUtility::debug('test', 'Hello, World!');
-		$this->view->assign('test', 'Hello, World!');
+	public function listAction() {
+		$this->parseClubCSV('C0308');
+		$this->convert2utf8();
+		$this->view->assignMultiple(array(
+			'members' => $this->members,
+			'dateOfLastUpdate' => $this->dateOfLastUpdate
+		));
 	}
 }
 

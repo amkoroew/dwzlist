@@ -1,0 +1,31 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+	<h3>Datum der letzten Aktualisierung: {dateOfLastUpdate}</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<f:comment><th>Geschlecht</th></f:comment>
+				<f:comment><th>Geburtsjahr</th></f:comment>
+				<f:comment><th>FIDE Titel</th></f:comment>
+				<th>letzte Auswertung</th>
+				<th>DWZ</th>
+				<th>ELO</th>
+			</tr>
+		</thead>
+		<tbody>
+			<f:for each="{members}" as="member">
+				<tr>
+					<td>{member.name}<f:if condition="{member.state}"> ({member.state})</f:if></td>
+					<f:comment><td>{member.gender}</td></f:comment>
+					<f:comment><td>{member.birthYear}</td></f:comment>
+					<f:comment><td>{member.fideTitle}</td></f:comment>
+					<td>{member.weekOfLastEvaluation}</td>
+					<td>{member.dwz} - {member.dwzIndex}</td>
+					<td>{member.elo}</td>
+				</tr>	
+			</f:for>
+		</tbody>
+	</table>
+</f:section>
