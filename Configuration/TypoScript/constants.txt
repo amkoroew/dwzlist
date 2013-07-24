@@ -1,0 +1,14 @@
+plugin.tx_mfgdwzlist {
+	view {
+		# cat=plugin.tx_mfgdwzlist/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:mfg_dwzlist/Resources/Private/Templates/
+		# cat=plugin.tx_mfgdwzlist/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:mfg_dwzlist/Resources/Private/Partials/
+		# cat=plugin.tx_mfgdwzlist/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:mfg_dwzlist/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_mfgdwzlist//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

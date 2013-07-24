@@ -1,0 +1,39 @@
+plugin.tx_mfgdwzlist {
+	view {
+		templateRootPath = {$plugin.tx_mfgdwzlist.view.templateRootPath}
+		partialRootPath = {$plugin.tx_mfgdwzlist.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_mfgdwzlist.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_mfgdwzlist.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+}
+
+plugin.tx_mfgdwzlist._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-mfg-dwzlist table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-mfg-dwzlist table th {
+		font-weight:bold;
+	}
+
+	.tx-mfg-dwzlist table td {
+		vertical-align:top;
+	}
+)
