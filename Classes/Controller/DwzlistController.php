@@ -55,6 +55,8 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				if ($tmp !== FALSE) {
 					$tmp['zps'] = $tmp['clubNumber'] . '-' . $tmp['memberNumber'];
 					$tmp['name'] = str_replace(',', ', ', $tmp['name']);
+					$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
+					$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
 					$this->members[] = $tmp;
 				}
 			}
@@ -75,6 +77,8 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			$tmp = array_combine($memberKeys, fgetcsv($fp, 1024, '|'));
 			if ($tmp !== FALSE) {
 				$tmp['name'] = str_replace(',', ', ', $tmp['name']);
+				$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
+				$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
 				$this->member['member'] = $tmp;
 			}
 			$tmp = array_combine($eloKeys, fgetcsv($fp, 1024, '|'));

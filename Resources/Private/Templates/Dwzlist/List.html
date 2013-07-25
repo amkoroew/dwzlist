@@ -23,7 +23,7 @@
 					<f:comment><td>{member.gender}</td></f:comment>
 					<f:comment><td>{member.birthYear}</td></f:comment>
 					<f:comment><td>{member.fideTitle}</td></f:comment>
-					<td>{member.weekOfLastEvaluation}</td>
+					<td>{member.yearOfLastEvaluation}<f:if condition="{member.weekOfLastEvaluation}"> - {member.weekOfLastEvaluation}</f:if></td>
 					<td>{member.dwz}<f:if condition="{member.dwzIndex}"> - {member.dwzIndex}</f:if></td>
 					<td>{member.elo}</td>
 				</tr>	
