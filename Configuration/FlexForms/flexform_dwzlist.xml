@@ -1,0 +1,46 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Settings</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+						<TCEforms>
+							<label>Mode</label>
+							<onChange>reload</onChange>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numindex index="1" type="array">
+										<numindex index="0">List-Mode</numindex>
+										<numindex index="1">Dwzlist->list;Dwzlist->show</numindex>
+									</numindex>
+									<numindex index="2" type="array">
+										<numindex index="0">Single-Mode</numindex>
+										<numindex index="1">Dwzlist->show</numindex>
+									</numindex>
+								</items>
+							</config>
+						</TCEforms>
+					</switchableControllerActions>
+					<settings.zps>
+						<TCEforms>
+							<label>ZPS</label>
+							<config>
+								<type>input</type>
+								<size>20</size>
+								<eval>trim,required</eval>
+							</config>
+						</TCEforms>
+					</settings.zps>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

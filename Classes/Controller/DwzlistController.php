@@ -130,7 +130,8 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function listAction() {
-		$this->parseClubCSV('C0308');
+		$zps = $this->settings['zps'];
+		$this->parseClubCSV($zps);
 		$this->convertMembers2utf8();
 		$this->view->assignMultiple(array(
 			'members' => $this->members,
@@ -143,7 +144,10 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @param string $zps
 	 * @return void
 	 */
-	public function showAction($zps) {
+	public function showAction($zps = NULL) {
+		if ($zps === NULL) {
+			$zps = $this->settings['zps'];
+		}
 		$this->parseMemberCSV($zps);
 		$this->convertMember2utf8();
 		$this->view->assignMultiple(array(
