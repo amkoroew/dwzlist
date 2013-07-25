@@ -17,7 +17,7 @@
 		<tbody>
 			<f:for each="{members}" as="member">
 				<tr>
-					<td>{member.name}<f:if condition="{member.state}"> ({member.state})</f:if></td>
+					<td><f:link.action action="show" arguments="{zps: member.zps}">{member.name}</f:link.action><f:if condition="{member.state}"> ({member.state})</f:if></td>
 					<f:comment><td>{member.gender}</td></f:comment>
 					<f:comment><td>{member.birthYear}</td></f:comment>
 					<f:comment><td>{member.fideTitle}</td></f:comment>

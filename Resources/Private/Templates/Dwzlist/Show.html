@@ -1,0 +1,35 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+	<h3>Datum der letzten Aktualisierung: {dateOfLastUpdate}</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Nr</th>
+				<f:comment><th>Turniercode</th></f:comment>
+				<th>Turnier</th>
+				<th>Punkte</th>
+				<th>Partien</th>
+				<th>Erwartungswert</th>
+				<th>Gegner</th>
+				<th>Leistung</th>
+				<th>DWZ</th>
+			</tr>
+		</thead>
+		<tbody>
+			<f:for each="{member.tournaments}" as="tournament">
+				<tr>
+					<td>{tournament.entryNumber}</td>
+					<f:comment><td>{tournament.tournamentCode}</td></f:comment>
+					<td>{tournament.tournamentName}</td>
+					<td>{tournament.points}</td>
+					<td>{tournament.games}</td>
+					<td>{tournament.expectedValue}</td>
+					<td>{tournament.opponents}</td>
+					<td>{tournament.performance}</td>
+					<td>{tournament.dwz} - {tournament.dwzIndex}</td>
+				</tr>	
+			</f:for>
+		</tbody>
+	</table>
+</f:section>
