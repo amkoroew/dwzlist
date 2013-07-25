@@ -5,6 +5,7 @@
 	<table>
 		<thead>
 			<tr>
+				<th>Platz</th>
 				<th>Name</th>
 				<f:comment><th>Geschlecht</th></f:comment>
 				<f:comment><th>Geburtsjahr</th></f:comment>
@@ -15,8 +16,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<f:for each="{members}" as="member">
+			<f:for each="{members}" as="member" iteration="iterator">
 				<tr>
+					<td>{iterator.cycle}.</td>
 					<td><f:link.action action="show" arguments="{zps: member.zps}">{member.name}</f:link.action><f:if condition="{member.state}"> ({member.state})</f:if></td>
 					<f:comment><td>{member.gender}</td></f:comment>
 					<f:comment><td>{member.birthYear}</td></f:comment>
