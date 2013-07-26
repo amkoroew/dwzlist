@@ -1,5 +1,5 @@
 <?php
-namespace MFG\MfgDwzlist\Controller;
+namespace MFG\Dwzlist\Controller;
 
 /***************************************************************
  *  Copyright notice
