@@ -54,13 +54,13 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$tmp = array_combine($keys, fgetcsv($fp, 1024, '|'));
 				if ($tmp !== FALSE) {
 					$tmp['zps'] = $tmp['clubNumber'] . '-' . $tmp['memberNumber'];
-					$tmp['name'] = str_replace(',', ', ', $tmp['name']);
 					$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
 					$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
 					$this->members[] = $tmp;
 				}
 			}
 			fclose($fp);
+			$this->convertAndCleanArray($this->members);
 		}
 	}
 
@@ -76,7 +76,6 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			$this->dateOfLastUpdate = fgets($fp);
 			$tmp = array_combine($memberKeys, fgetcsv($fp, 1024, '|'));
 			if ($tmp !== FALSE) {
-				$tmp['name'] = str_replace(',', ', ', $tmp['name']);
 				$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
 				$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
 				$this->member['member'] = $tmp;
@@ -88,37 +87,30 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			while(!feof($fp)) {
 				$tmp = array_combine($tournamentKeys, fgetcsv($fp, 1024, '|'));
 				if ($tmp !== FALSE) {
-					$tmp['points'] = str_replace('&frac12;', '.5', $tmp['points']);
 					$this->member['tournaments'][] = $tmp;
 				}
 			}
 			fclose($fp);
+			$this->convertAndCleanArray($this->member);
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 */
-	public function convertMembers2utf8() {
-		foreach($this->members as &$member) {
-			foreach($member as &$data) {
-				$data = iconv('ISO-8859-1', 'UTF-8', $data);
-			}
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public function convertMember2utf8() {
-		foreach($this->member as &$type) {
-			foreach($type as &$data) {
-				if (is_array($data)) {
-					foreach($data as &$d) {
-						$d = iconv('ISO-8859-1', 'UTF-8', $d);
-					}
+	public function convertAndCleanArray(&$array) {
+		if ($array === NULL) {
+			$array = array();
+		} elseif (is_array($array)) {
+			foreach($array as &$a) {
+				if (is_array($a)) {
+					$this->convertAndCleanArray($a);
 				} else {
-					$data = iconv('ISO-8859-1', 'UTF-8', $data);
+					$a = iconv('ISO-8859-1', 'UTF-8', $a);
+					$a = strip_tags($a);
+					$a = str_replace(',', ', ', $a);
+					$a = str_replace('&frac12;', '1/2', $a);
+					$a = str_replace('&nbsp;', '', $a);
 				}
 			}
 		}
@@ -132,7 +124,6 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	public function listAction() {
 		$zps = $this->settings['zps'];
 		$this->parseClubCSV($zps);
-		$this->convertMembers2utf8();
 		$this->view->assignMultiple(array(
 			'members' => $this->members,
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
@@ -149,7 +140,6 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			$zps = $this->settings['zps'];
 		}
 		$this->parseMemberCSV($zps);
-		$this->convertMember2utf8();
 		$this->view->assignMultiple(array(
 			'member' => $this->member,
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
