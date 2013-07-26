@@ -76,6 +76,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			$this->dateOfLastUpdate = fgets($fp);
 			$tmp = array_combine($memberKeys, fgetcsv($fp, 1024, '|'));
 			if ($tmp !== FALSE) {
+				$tmp['zps'] = $tmp['clubNumber'] . '-' . $tmp['memberNumber'];
 				$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
 				$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
 				$this->member['member'] = $tmp;
@@ -141,7 +142,9 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		}
 		$this->parseMemberCSV($zps);
 		$this->view->assignMultiple(array(
-			'member' => $this->member,
+			'member' => $this->member['member'],
+			'elo' => $this->member['elo'],
+			'tournaments' => $this->member['tournaments'],
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
 		));
 	}

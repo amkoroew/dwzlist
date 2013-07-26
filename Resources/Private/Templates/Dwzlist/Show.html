@@ -1,7 +1,18 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-	<h3>Datum der letzten Aktualisierung: {dateOfLastUpdate}</h3>
+	<h3>Karteikarte von {member.name}</h3>
+	ZPS: {member.zps}<br />
+	<f:if condition="{member.fideTitle}">FIDE Titel: {member.fideTitle}<br /></f:if>
+	<f:if condition="{member.birthYear}">Geburtsjahr: {member.birthYear}<br /></f:if>
+	Geschlecht: {f:if(condition: '{0:member.gender} == {0:"M"}', then: 'Männlich', else: 'Weiblich')}<br />
+	Letze Auswertung: {member.yearOfLastEvaluation} - {member.weekOfLastEvaluation}<br />
+	DWZ: {member.dwz} - {member.dwzIndex}<br />
+	<f:if condition="{elo.elo}">ELO: {elo.elo}<br /></f:if>
+	<f:if condition="{elo.gams}">Spiele: {elo.games}<br /></f:if>
+	<f:comment><f:if condition="{elo.title}">Titel: {elo.title}<br /></f:if></f:comment>
+	<f:if condition="{elo.id}"><f:link.external uri="http://ratings.fide.com/card.phtml?event={elo.id}">FIDE Profil</f:link.external><br /></f:if>
+	<f:if condition="{elo.country}">Nationalität: {elo.country}</f:if>
 	<table>
 		<thead>
 			<tr>
@@ -17,7 +28,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<f:for each="{member.tournaments}" as="tournament">
+			<f:for each="{tournaments}" as="tournament">
 				<tr>
 					<td>{tournament.entryNumber}</td>
 					<f:comment><td>{tournament.tournamentCode}</td></f:comment>
