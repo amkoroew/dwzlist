@@ -23,7 +23,7 @@ namespace MFG\Dwzlist\Controller;
  * Base controller
  *
  * @package TYPO3
- * @subpackage mfg_dwzlist
+ * @subpackage dwzlist
  */
 class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
