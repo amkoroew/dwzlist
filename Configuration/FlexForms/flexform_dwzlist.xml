@@ -42,5 +42,23 @@
 				</el>
 			</ROOT>
 		</sDEF>
+		<graph>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Graph</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.hideGraph>
+						<TCEforms>
+							<label>Hide graph</label>
+							<config>
+								<type>check</type>
+							</config>
+						</TCEforms>
+					</settings.hideGraph>
+				</el>
+			</ROOT>
+		</graph>
 	</sheets>
 </T3DataStructure>
