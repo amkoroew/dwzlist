@@ -12,6 +12,7 @@
 
 			]]>
 			var data = {graphData->f:format.raw()};
+			var graphColor = '{settings.graphColor->f:format.raw()}';
 			<![CDATA[
 
 			function getMaxY() {
@@ -76,7 +77,7 @@
 					c.fillText(i, xPadding - 10, getYPixel(i));
 				}
 
-				c.strokeStyle = '#00F';
+				c.strokeStyle = graphColor;
 				c.beginPath();
 				c.moveTo(getXPixel(0), getYPixel(data.values[0].Y));
 

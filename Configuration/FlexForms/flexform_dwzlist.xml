@@ -57,6 +57,26 @@
 							</config>
 						</TCEforms>
 					</settings.hideGraph>
+					<settings.graphColor>
+						<TCEforms>
+							<label>Graph color</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<wizards>
+									<color>
+										<type>colorbox</type>
+										<dim>18x18</dim>
+										<tableStyle>border:solid 1px black;</tableStyle>
+										<script>wizard_colorpicker.php</script>
+										<JSopenParams>height=340,width=360,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</color>
+								</wizards>
+								<default></default>
+								<eval>#555555</eval>
+							</config>
+						</TCEforms>
+					</settings.graphColor>
 				</el>
 			</ROOT>
 		</graph>
