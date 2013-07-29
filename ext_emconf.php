@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'DWZ list',
-	'description' => 'Shows a DWZ list containing all players of the chessclub specified by the given ZPS.',
+	'description' => 'Shows DWZ information from schachbund.de. List all members of a club or show detailed information of a member.',
 	'category' => 'plugin',
 	'author' => 'Matthias Gugel',
 	'author_email' => 'mail@matthias-gugel.de',
