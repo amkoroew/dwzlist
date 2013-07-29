@@ -43,6 +43,11 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	private $member = NULL;
 
 	/**
+	 *
+	 */
+	private $dwzGraphData = NULL;
+
+	/**
 	 * 
 	 */
 	public function parseClubCSV($zps) {
@@ -88,6 +93,9 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			while(!feof($fp)) {
 				$tmp = array_combine($tournamentKeys, fgetcsv($fp, 1024, '|'));
 				if ($tmp !== FALSE) {
+					if($tmp['dwzIndex'] > 0) {
+						$this->dwzGraphData['values'][] = array ('X'=>(int)$tmp['dwzIndex'], 'Y'=>(int)$tmp['dwz']);
+					}
 					$this->member['tournaments'][] = $tmp;
 				}
 			}
@@ -145,6 +153,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			'member' => $this->member['member'],
 			'elo' => $this->member['elo'],
 			'tournaments' => $this->member['tournaments'],
+			'graphData' => json_encode($this->dwzGraphData),
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
 		));
 	}
