@@ -3,16 +3,18 @@ EXT: dwzlist
 =========================
 
 Extension Key: dwzlist
+
 Language: en
+
 Version: 1.0.0
+
 Keywords: dwz
+
 Copyright 2013, Matthias Gugel, <mail@matthias-gugel.de>
 
-This document is published under the Open Content License
-available from http://www.opencontent.org/opl.shtml
+This document is published under the Open Content License available from http://www.opencontent.org/opl.shtml
 
-The content of this document is related to TYPO3
-- a GNU/GPL CMS/Framework available from www.typo3.org
+The content of this document is related to TYPO3 - a GNU/GPL CMS/Framework available from www.typo3.org
 
 Introduction
 ============
