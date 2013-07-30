@@ -37,17 +37,17 @@ Screenshots
 	:width: 500px
 	:alt: Single-Mode settings
 
-		Single-Mode settings
+	Single-Mode settings
 
-		The ZPS for a member is required.
+	The ZPS for a member is required.
 
 .. figure:: Documentation/Images/UserManual/DWZlist-Graph.png
 	:width: 500px
 	:alt: Graph settings
 
-		Graph settings
+	Graph settings
 
-		Settings to hide the graph and to set the color of the graph.
+	Settings to hide the graph and to set the color of the graph.
 
 Users manual
 ============
