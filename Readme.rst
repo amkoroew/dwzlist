@@ -23,7 +23,7 @@ Shows DWZ information from schachbund.de. List all members of a club or show det
 
 Screenshots
 -----------
-.. figure:: Images/UserManual/DWZlist-List.png
+.. figure:: Documentation/Images/UserManual/DWZlist-List.png
 	:width: 500px
 	:alt: List-Mode settings
 
@@ -31,7 +31,7 @@ Screenshots
 
 	The ZPS for a club is required.
 
-.. figure:: Images/UserManual/DWZlist-Single.png
+.. figure:: Documentation/Images/UserManual/DWZlist-Single.png
 	:width: 500px
 	:alt: Single-Mode settings
 
@@ -39,7 +39,7 @@ Screenshots
 
 		The ZPS for a member is required.
 
-.. figure:: Images/UserManual/DWZlist-Graph.png
+.. figure:: Documentation/Images/UserManual/DWZlist-Graph.png
 	:width: 500px
 	:alt: Graph settings
 
