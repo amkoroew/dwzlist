@@ -1,14 +1,12 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-	<h3>Datum der letzten Aktualisierung: {dateOfLastUpdate}</h3>
+	<h3>Datum der letzten Aktualisierung: <f:format.date format="d.m.Y">{dateOfLastUpdate}</f:format.date></h3>
 	<table>
 		<thead>
 			<tr>
 				<th>Platz</th>
 				<th>Name</th>
-				<f:comment><th>Geschlecht</th></f:comment>
-				<f:comment><th>Geburtsjahr</th></f:comment>
 				<f:comment><th>FIDE Titel</th></f:comment>
 				<th>letzte Auswertung</th>
 				<th>DWZ</th>
@@ -19,14 +17,14 @@
 			<f:for each="{members}" as="member" iteration="iterator">
 				<tr>
 					<td>{iterator.cycle}.</td>
-					<td><f:link.action action="show" arguments="{zps: member.zps}">{member.name}</f:link.action><f:if condition="{member.state}"> ({member.state})</f:if></td>
+					<td><f:link.action action="show" arguments="{pkz: member.id, dateOfLastUpdate: member.turnierende}">{member.nachname}, {member.titel} {member.vorname}</f:link.action><f:if condition="{member.status}"> ({member.status})</f:if></td>
 					<f:comment><td>{member.gender}</td></f:comment>
 					<f:comment><td>{member.birthYear}</td></f:comment>
 					<f:comment><td>{member.fideTitle}</td></f:comment>
-					<td>{member.yearOfLastEvaluation}<f:if condition="{member.weekOfLastEvaluation}"> - {member.weekOfLastEvaluation}</f:if></td>
+					<td><f:format.date format="d.m.Y">{member.turnierende}</f:format.date></td>
 					<td>{member.dwz}<f:if condition="{member.dwzIndex}"> - {member.dwzIndex}</f:if></td>
-					<td>{member.elo}</td>
-				</tr>	
+					<td>{member.fideelo}</td>
+				</tr>
 			</f:for>
 		</tbody>
 	</table>
