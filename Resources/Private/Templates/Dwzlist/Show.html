@@ -3,6 +3,9 @@
 <f:section name="content">
 
 	<f:if condition="{settings.hideGraph} == 0">
+
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
 		<script type="text/javascript">
 			<![CDATA[
 
@@ -98,17 +101,11 @@
 		</script>
 	</f:if>
 
-	<h3>Karteikarte von {member.name}</h3>
-	ZPS: {member.zps}<br/>
+	<h3>Karteikarte von {spieler.nachname}, {spieler.titel} {spieler.vorname}</h3>
 	<f:if condition="{member.fideTitle}">FIDE Titel: {member.fideTitle}<br/></f:if>
-	<f:if condition="{member.birthYear}">Geburtsjahr: {member.birthYear}<br/></f:if>
-	Geschlecht: {f:if(condition: '{0:member.gender} == {0:"M"}', then: 'Männlich', else: 'Weiblich')}<br/>
-	Letze Auswertung: {member.yearOfLastEvaluation} - {member.weekOfLastEvaluation}<br/>
-	DWZ: {member.dwz}
-	<f:if condition="{member.dwzIndex}"> - {member.dwzIndex}</f:if>
-	<br/>
-	<f:if condition="{elo.elo}">ELO: {elo.elo}<br/></f:if>
-	<f:if condition="{elo.gams}">Spiele: {elo.games}<br/></f:if>
+	Letze Auswertung: <f:format.date format="d.m.Y">{dateOfLastUpdate}</f:format.date><br/>
+	DWZ: {spieler.dwz}<f:if condition="{spieler.dwzindex}"> - {spieler.dwzindex}</f:if><br/>
+	<f:if condition="{spieler.fideelo}">ELO: {elo.elo}<br/></f:if>
 	<f:comment>
 		<f:if condition="{elo.title}">Titel: {elo.title}<br/></f:if>
 	</f:comment>
@@ -116,13 +113,12 @@
 		<f:link.external uri="http://ratings.fide.com/card.phtml?event={elo.id}">FIDE Profil</f:link.external>
 		<br/></f:if>
 	<f:if condition="{elo.country}">Nationalität: {elo.country}</f:if>
+	Historie: <f:link.external uri="http://altdwz.schachbund.de/db/spieler.html?zps={mitgliedschaft.0.zpsver}-{mitgliedschaft.0.zpsmgl}">Alte Karteikarte</f:link.external>
 	<table>
 		<thead>
 		<tr>
 			<th>Nr</th>
-			<f:comment>
-				<th>Turniercode</th>
-			</f:comment>
+			<f:comment><th>Turniercode</th></f:comment>
 			<th>Turnier</th>
 			<th>Punkte</th>
 			<th>Partien</th>
@@ -133,19 +129,17 @@
 		</tr>
 		</thead>
 		<tbody>
-		<f:for each="{tournaments}" as="tournament">
+		<f:for each="{turniere}" as="turnier" iteration="iterator">
 			<tr>
-				<td>{tournament.entryNumber}</td>
-				<f:comment>
-					<td>{tournament.tournamentCode}</td>
-				</f:comment>
-				<td>{tournament.tournamentName}</td>
-				<td>{tournament.points}</td>
-				<td>{tournament.games}</td>
-				<td>{tournament.expectedValue}</td>
-				<td>{tournament.opponents}</td>
-				<td>{tournament.performance}</td>
-				<td>{tournament.dwz} - {tournament.dwzIndex}</td>
+				<td>{iterator.cycle}</td>
+				<f:comment><td>{turnier.turniercode}</td></f:comment>
+				<td>{turnier.turniername}</td>
+				<td>{turnier.punkte}</td>
+				<td>{turnier.partien}</td>
+				<td>{turnier.erwartungswert}</td>
+				<td>{turnier.gegner}</td>
+				<td>{turnier.leistung}</td>
+				<td>{turnier.dwzneu} - {turnier.dwzneuindex}</td>
 			</tr>
 		</f:for>
 		</tbody>
