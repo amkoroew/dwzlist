@@ -50,77 +50,25 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	/**
 	 * 
 	 */
-	public function parseClubCSV($zps) {
-		$fp = fopen('http://www.schachbund.de/dwz/db/verein-csv.php?zps=' . $zps, 'r');
-		if ($fp !== FALSE) {
-			$keys = array('clubNumber', 'memberNumber', 'state', 'name', 'gender', 'birthYear', 'fideTitle', 'weekOfLastEvaluation', 'dwz', 'dwzIndex', 'elo');
-			$this->dateOfLastUpdate = fgets($fp);
-			while(!feof($fp)) {
-				$tmp = array_combine($keys, fgetcsv($fp, 1024, '|'));
-				if ($tmp !== FALSE) {
-					$tmp['zps'] = $tmp['clubNumber'] . '-' . $tmp['memberNumber'];
-					$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
-					$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
-					$this->members[] = $tmp;
-				}
-			}
-			fclose($fp);
-			$this->convertAndCleanArray($this->members);
-		}
-	}
+	public function fetchClubData($zps) {
+		$this->members = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/verein.php?zps=' . $zps . '&format=array', 'r'));
 
-	/**
-	 * 
-	 */
-	public function parseMemberCSV($zps) {
-		$fp = fopen('http://www.schachbund.de/dwz/db/spieler-csv.php?zps=' . $zps, 'r');
-		if ($fp !== FALSE) {
-			$memberKeys = array('clubNumber', 'memberNumber', 'state', 'name', 'gender', 'birthYear', 'fideTitle', 'weekOfLastEvaluation', 'dwz', 'dwzIndex');
-			$eloKeys = array('elo', 'games', 'title', 'id', 'country');
-			$tournamentKeys = array('entryNumber', 'tournamentCode', 'tournamentName', 'points', 'games', 'expectedValue', 'opponents', 'performance', 'dwz', 'dwzIndex');
-			$this->dateOfLastUpdate = fgets($fp);
-			$tmp = array_combine($memberKeys, fgetcsv($fp, 1024, '|'));
-			if ($tmp !== FALSE) {
-				$tmp['zps'] = $tmp['clubNumber'] . '-' . $tmp['memberNumber'];
-				$tmp['yearOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], 0, 4);
-				$tmp['weekOfLastEvaluation'] = substr($tmp['weekOfLastEvaluation'], -2);
-				$this->member['member'] = $tmp;
-			}
-			$tmp = array_combine($eloKeys, fgetcsv($fp, 1024, '|'));
-			if ($tmp !== FALSE) {
-				$this->member['elo'] = $tmp;
-			}
-			while(!feof($fp)) {
-				$tmp = array_combine($tournamentKeys, fgetcsv($fp, 1024, '|'));
-				if ($tmp !== FALSE) {
-					if($tmp['dwzIndex'] > 0) {
-						$this->dwzGraphData['values'][] = array ('X'=>(int)$tmp['dwzIndex'], 'Y'=>(int)$tmp['dwz']);
-					}
-					$this->member['tournaments'][] = $tmp;
-				}
-			}
-			fclose($fp);
-			$this->convertAndCleanArray($this->member);
+		foreach($this->members as $key => $row) {
+			$this->dateOfLastUpdate = max($this->dateOfLastUpdate, $row['turnierende']);
+			$dwz[$key]  = $row['dwz'];
+			$dwzIndex[$key]  = $row['dwzIndex'];
 		}
+		array_multisort($dwz, SORT_DESC, SORT_NUMERIC, $this->members);
 	}
 
 	/**
 	 *
 	 */
-	public function convertAndCleanArray(&$array) {
-		if ($array === NULL) {
-			$array = array();
-		} elseif (is_array($array)) {
-			foreach($array as &$a) {
-				if (is_array($a)) {
-					$this->convertAndCleanArray($a);
-				} else {
-					$a = iconv('ISO-8859-1', 'UTF-8', $a);
-					$a = strip_tags($a);
-					$a = str_replace(',', ', ', $a);
-					$a = str_replace('&frac12;', '1/2', $a);
-					$a = str_replace('&nbsp;', '', $a);
-				}
+	public function fetchMemberData($pkz) {
+		$this->member = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/spieler.php?pkz=' . $pkz . '&format=array', 'r'));
+		foreach($this->member['turnier'] as $turnier) {
+			if ($turnier['dwzneuindex'] > 0) {
+				$this->dwzGraphData['values'][] = array('X' => (int)$turnier['dwzneuindex'], 'Y' => (int)$turnier['dwzneu']);
 			}
 		}
 	}
@@ -132,7 +80,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function listAction() {
 		$zps = $this->settings['zps'];
-		$this->parseClubCSV($zps);
+		$this->fetchClubData($zps);
 		$this->view->assignMultiple(array(
 			'members' => $this->members,
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
@@ -141,20 +89,22 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 * Show a member
-	 * @param string $zps
+	 * @param string $pkz
+	 * @param string $dateOfLastUpdate
 	 * @return void
 	 */
-	public function showAction($zps = NULL) {
-		if ($zps === NULL) {
-			$zps = $this->settings['zps'];
+	public function showAction($pkz = NULL, $dateOfLastUpdate = NULL) {
+		if ($pkz === NULL) {
+			$pkz = $this->settings['pkz'];
 		}
-		$this->parseMemberCSV($zps);
+		$this->fetchMemberData($pkz);
 		$this->view->assignMultiple(array(
-			'member' => $this->member['member'],
-			'elo' => $this->member['elo'],
-			'tournaments' => $this->member['tournaments'],
-			'graphData' => json_encode($this->dwzGraphData),
-			'dateOfLastUpdate' => $this->dateOfLastUpdate
+			'spieler' => $this->member['spieler'],
+			'rang' => $this->member['rang'],
+			'mitgliedschaft' => $this->member['mitgliedschaft'],
+			'turniere' => $this->member['turnier'],
+			'dateOfLastUpdate' => $dateOfLastUpdate,
+			'graphData' => json_encode($this->dwzGraphData)
 		));
 	}
 }
