@@ -17,6 +17,7 @@
 			var dwzGraphData = {dwzGraphData->f:format.raw()};
 			var performanceGraphData = {performanceGraphData->f:format.raw()}
 			var graphColor = '{settings.graphColor->f:format.raw()}';
+			var performanceGraphColor = '{settings.performanceGraphColor->f:format.raw()}';
 			<![CDATA[
 
 			function getMaxY() {
@@ -121,7 +122,7 @@
 					c.fill();
 				}
 
-				c.strokeStyle = graphColor;
+				c.strokeStyle = performanceGraphColor;
 				c.beginPath();
 				c.moveTo(getXPixel(getCorrespondingPos(0)), getYPixel(performanceGraphData.values[0].Y));
 
