@@ -28,12 +28,12 @@ namespace MFG\Dwzlist\Controller;
 class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * 
+	 *
 	 */
 	private $dateOfLastUpdate = NULL;
 
 	/**
-	 * 
+	 *
 	 */
 	private $members = NULL;
 
@@ -48,7 +48,12 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	private $dwzGraphData = NULL;
 
 	/**
-	 * 
+	 *
+	 */
+	private $performanceGraphData = NULL;
+
+	/**
+	 *
 	 */
 	public function fetchClubData($zps) {
 		$this->members = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/verein.php?zps=' . $zps . '&format=array', 'r'));
@@ -69,6 +74,9 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		foreach($this->member['turnier'] as $turnier) {
 			if ($turnier['dwzneuindex'] > 0) {
 				$this->dwzGraphData['values'][] = array('X' => (int)$turnier['dwzneuindex'], 'Y' => (int)$turnier['dwzneu']);
+				if ($turnier['leistung'] > 0) {
+					$this->performanceGraphData['values'][] = array('X' => (int)$turnier['dwzneuindex'], 'Y' => (int)$turnier['leistung']);
+				}
 			}
 		}
 	}
@@ -104,7 +112,8 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			'mitgliedschaft' => $this->member['mitgliedschaft'],
 			'turniere' => $this->member['turnier'],
 			'dateOfLastUpdate' => $dateOfLastUpdate,
-			'graphData' => json_encode($this->dwzGraphData)
+			'dwzGraphData' => json_encode($this->dwzGraphData),
+			'performanceGraphData' => json_encode($this->performanceGraphData)
 		));
 	}
 }

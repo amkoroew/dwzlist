@@ -14,16 +14,23 @@
 			var yPadding = 30;
 
 			]]>
-			var data = {graphData->f:format.raw()};
+			var dwzGraphData = {dwzGraphData->f:format.raw()};
+			var performanceGraphData = {performanceGraphData->f:format.raw()}
 			var graphColor = '{settings.graphColor->f:format.raw()}';
 			<![CDATA[
 
 			function getMaxY() {
 				var max = 0;
 
-				for (var i = 0; i < data.values.length; i++) {
-					if (data.values[i].Y > max) {
-						max = data.values[i].Y;
+				for (var i = 0; i < dwzGraphData.values.length; i++) {
+					if (dwzGraphData.values[i].Y > max) {
+						max = dwzGraphData.values[i].Y;
+					}
+				}
+
+				for (var i = 0; i < performanceGraphData.values.length; i++) {
+					if (performanceGraphData.values[i].Y > max) {
+						max = performanceGraphData.values[i].Y;
 					}
 				}
 
@@ -34,9 +41,15 @@
 			function getMinY() {
 				var min = 65536;
 
-				for (var i = 0; i < data.values.length; i++) {
-					if (data.values[i].Y < min) {
-						min = data.values[i].Y;
+				for (var i = 0; i < dwzGraphData.values.length; i++) {
+					if (dwzGraphData.values[i].Y < min) {
+						min = dwzGraphData.values[i].Y;
+					}
+				}
+
+				for (var i = 0; i < performanceGraphData.values.length; i++) {
+					if (performanceGraphData.values[i].Y < min) {
+						min = performanceGraphData.values[i].Y;
 					}
 				}
 
@@ -45,11 +58,22 @@
 			}
 
 			function getXPixel(val) {
-				return ((graph.width() - xPadding) / data.values.length) * val + xPadding;
+				return ((graph.width() - xPadding) / dwzGraphData.values.length) * val + xPadding;
 			}
 
 			function getYPixel(val) {
 				return graph.height() - (((graph.height() - yPadding) / (getMaxY() - getMinY())) * (val - getMinY())) - yPadding;
+			}
+
+			function getCorrespondingPos(val) {
+				var tmp = performanceGraphData.values[val].X;
+				var i;
+				for(i = 0; i < dwzGraphData.values.length; ++i) {
+					if (dwzGraphData.values[i].X == tmp) {
+						break;
+					}
+				}
+				return i;
 			}
 
 			$(document).ready(function () {
@@ -67,9 +91,9 @@
 				c.lineTo(graph.width(), graph.height() - yPadding);
 				c.stroke();
 
-				for (var i = 0; i < data.values.length; i++) {
-					if ((data.values[i].X) % 5 == 0) {
-						c.fillText(data.values[i].X, getXPixel(i), graph.height() - yPadding + 20);
+				for (var i = 0; i < dwzGraphData.values.length; i++) {
+					if ((dwzGraphData.values[i].X) % 5 == 0) {
+						c.fillText(dwzGraphData.values[i].X, getXPixel(i), graph.height() - yPadding + 20);
 					}
 				}
 
@@ -82,18 +106,35 @@
 
 				c.strokeStyle = graphColor;
 				c.beginPath();
-				c.moveTo(getXPixel(0), getYPixel(data.values[0].Y));
+				c.moveTo(getXPixel(0), getYPixel(dwzGraphData.values[0].Y));
 
-				for (var i = 1; i < data.values.length; i++) {
-					c.lineTo(getXPixel(i), getYPixel(data.values[i].Y));
+				for (var i = 1; i < dwzGraphData.values.length; i++) {
+					c.lineTo(getXPixel(i), getYPixel(dwzGraphData.values[i].Y));
 				}
 				c.stroke();
 
 				c.fillStyle = '#333';
 
-				for (var i = 0; i < data.values.length; i++) {
+				for (var i = 0; i < dwzGraphData.values.length; i++) {
 					c.beginPath();
-					c.arc(getXPixel(i), getYPixel(data.values[i].Y), 4, 0, Math.PI * 2, true);
+					c.arc(getXPixel(i), getYPixel(dwzGraphData.values[i].Y), 4, 0, Math.PI * 2, true);
+					c.fill();
+				}
+
+				c.strokeStyle = graphColor;
+				c.beginPath();
+				c.moveTo(getXPixel(getCorrespondingPos(0)), getYPixel(performanceGraphData.values[0].Y));
+
+				for (var i = 1; i < performanceGraphData.values.length; i++) {
+					c.lineTo(getXPixel(getCorrespondingPos(i)), getYPixel(performanceGraphData.values[i].Y));
+				}
+				c.stroke();
+
+				c.fillStyle = '#333';
+
+				for (var i = 0; i < performanceGraphData.values.length; i++) {
+					c.beginPath();
+					c.arc(getXPixel(getCorrespondingPos(i)), getYPixel(performanceGraphData.values[i].Y), 4, 0, Math.PI * 2, true);
 					c.fill();
 				}
 			});
