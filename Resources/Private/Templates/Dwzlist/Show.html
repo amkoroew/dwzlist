@@ -165,7 +165,7 @@
 	</f:if>
 
 	<h3>Karteikarte von {spieler.nachname}, {spieler.titel} {spieler.vorname}</h3>
-	<f:if condition="{member.fideTitle}">FIDE Titel: {member.fideTitle}<br/></f:if>
+	<f:if condition="{spieler.fidetitel}">FIDE Titel: {spieler.fidetitel}<br/></f:if>
 	Letze Auswertung: <f:format.date format="d.m.Y">{dateOfLastUpdate}</f:format.date><br/>
 	DWZ: {spieler.dwz}<f:if condition="{spieler.dwzindex}"> - {spieler.dwzindex}</f:if><br/>
 	<f:if condition="{spieler.fideelo}">ELO: {spieler.fideelo}<br/></f:if>
