@@ -105,6 +105,27 @@
 					c.fillText(i, xPadding - 10, getYPixel(i));
 				}
 
+				c.textAlign = "left"
+				c.strokeStyle = dwzGraphColor;
+				c.beginPath();
+				c.moveTo(graph.width() - 100, graph.height() - 60);
+				c.lineTo(graph.width() - 50, graph.height() - 60);
+				c.stroke();
+				c.beginPath();
+				c.arc(graph.width() - 75, graph.height() - 60, 4, 0, Math.PI * 2, true);
+				c.fill();
+				c.fillText("DWZ", graph.width() - 45, graph.height() - 60);
+
+				c.strokeStyle = performanceGraphColor;
+				c.beginPath();
+				c.moveTo(graph.width() - 100, graph.height() - 45);
+				c.lineTo(graph.width() - 50, graph.height() - 45);
+				c.stroke();
+				c.beginPath();
+				c.arc(graph.width() - 75, graph.height() - 45, 4, 0, Math.PI * 2, true);
+				c.fill();
+				c.fillText("Leistung", graph.width() - 45, graph.height() - 45);
+
 				c.strokeStyle = dwzGraphColor;
 				c.beginPath();
 				c.moveTo(getXPixel(0), getYPixel(dwzGraphData.values[0].Y));
