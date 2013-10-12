@@ -71,7 +71,9 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function fetchMemberData($pkz) {
 		$this->member = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/spieler.php?pkz=' . $pkz . '&format=array', 'r'));
-		foreach($this->member['turnier'] as $turnier) {
+
+		foreach($this->member['turnier'] as &$turnier) {
+			$turnier['dwzchange'] = ($turnier['dwzalt'] > 0 && $turnier['dwzneu'] > 0) ? $turnier['dwzneu'] - $turnier['dwzalt'] : 0;
 			if ($turnier['dwzneuindex'] > 0) {
 				$this->dwzGraphData['values'][] = array('X' => (int)$turnier['dwzneuindex'], 'Y' => (int)$turnier['dwzneu']);
 				if ($turnier['leistung'] > 0) {

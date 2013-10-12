@@ -202,7 +202,7 @@
 				<td>{turnier.erwartungswert}</td>
 				<td>{turnier.gegner}</td>
 				<td>{turnier.leistung}</td>
-				<td>{turnier.dwzneu} - {turnier.dwzneuindex}</td>
+				<td>{turnier.dwzneu} - {turnier.dwzneuindex} [{f:if(condition: '{turnier.dwzchange} > 0', then: '+')}{turnier.dwzchange}]</td>
 			</tr>
 		</f:for>
 		</tbody>
