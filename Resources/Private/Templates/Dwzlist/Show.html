@@ -16,7 +16,7 @@
 			]]>
 			var dwzGraphData = {dwzGraphData->f:format.raw()};
 			var performanceGraphData = {performanceGraphData->f:format.raw()}
-			var graphColor = '{settings.graphColor->f:format.raw()}';
+			var dwzGraphColor = '{settings.dwzGraphColor->f:format.raw()}';
 			var performanceGraphColor = '{settings.performanceGraphColor->f:format.raw()}';
 			<![CDATA[
 
@@ -105,7 +105,7 @@
 					c.fillText(i, xPadding - 10, getYPixel(i));
 				}
 
-				c.strokeStyle = graphColor;
+				c.strokeStyle = dwzGraphColor;
 				c.beginPath();
 				c.moveTo(getXPixel(0), getYPixel(dwzGraphData.values[0].Y));
 

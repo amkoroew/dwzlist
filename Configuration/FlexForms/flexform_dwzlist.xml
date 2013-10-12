@@ -57,9 +57,9 @@
 							</config>
 						</TCEforms>
 					</settings.hideGraph>
-					<settings.graphColor>
+					<settings.dwzGraphColor>
 						<TCEforms>
-							<label>Graph color</label>
+							<label>DWZ graph color</label>
 							<config>
 								<type>input</type>
 								<size>6</size>
@@ -76,7 +76,7 @@
 								<eval>#555555</eval>
 							</config>
 						</TCEforms>
-					</settings.graphColor>
+					</settings.dwzGraphColor>
 					<settings.performanceGraphColor>
 						<TCEforms>
 							<label>Performance graph color</label>
