@@ -172,7 +172,7 @@
 	<f:if condition="{spieler.fideid}">
 		<f:link.external uri="http://ratings.fide.com/card.phtml?event={spieler.fideid}">FIDE Profil</f:link.external>
 		<br/></f:if>
-	<f:if condition="{elo.country}">Nationalität: {elo.country}</f:if>
+	<f:if condition="{spieler.fidenation}">Nationalität: {spieler.fidenation}<br /></f:if>
 	Historie: <f:link.external uri="http://altdwz.schachbund.de/db/spieler.html?zps={mitgliedschaft.0.zpsver}-{mitgliedschaft.0.zpsmgl}">Alte Karteikarte</f:link.external>
 	<table>
 		<thead>
