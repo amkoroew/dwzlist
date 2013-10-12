@@ -168,7 +168,7 @@
 	<f:if condition="{member.fideTitle}">FIDE Titel: {member.fideTitle}<br/></f:if>
 	Letze Auswertung: <f:format.date format="d.m.Y">{dateOfLastUpdate}</f:format.date><br/>
 	DWZ: {spieler.dwz}<f:if condition="{spieler.dwzindex}"> - {spieler.dwzindex}</f:if><br/>
-	<f:if condition="{spieler.fideelo}">ELO: {elo.elo}<br/></f:if>
+	<f:if condition="{spieler.fideelo}">ELO: {spieler.fideelo}<br/></f:if>
 	<f:comment>
 		<f:if condition="{elo.title}">Titel: {elo.title}<br/></f:if>
 	</f:comment>
