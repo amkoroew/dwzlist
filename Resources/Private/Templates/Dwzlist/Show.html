@@ -169,9 +169,6 @@
 	Letze Auswertung: <f:format.date format="d.m.Y">{dateOfLastUpdate}</f:format.date><br/>
 	DWZ: {spieler.dwz}<f:if condition="{spieler.dwzindex}"> - {spieler.dwzindex}</f:if><br/>
 	<f:if condition="{spieler.fideelo}">ELO: {spieler.fideelo}<br/></f:if>
-	<f:comment>
-		<f:if condition="{elo.title}">Titel: {elo.title}<br/></f:if>
-	</f:comment>
 	<f:if condition="{elo.id}">
 		<f:link.external uri="http://ratings.fide.com/card.phtml?event={elo.id}">FIDE Profil</f:link.external>
 		<br/></f:if>
