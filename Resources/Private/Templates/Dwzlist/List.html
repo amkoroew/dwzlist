@@ -17,7 +17,7 @@
 			<f:for each="{members}" as="member" iteration="iterator">
 				<tr>
 					<td>{iterator.cycle}.</td>
-					<td><f:link.action action="show" arguments="{pkz: member.id, dateOfLastUpdate: member.turnierende}">{member.nachname}, {member.titel} {member.vorname}</f:link.action><f:if condition="{member.status}"> ({member.status})</f:if></td>
+					<td><f:link.action action="show" arguments="{pkz: member.id, zps: zps, dateOfLastUpdate: member.turnierende}">{member.nachname}, {member.titel} {member.vorname}</f:link.action><f:if condition="{member.status}"> ({member.status})</f:if></td>
 					<td><f:format.date format="d.m.Y">{member.turnierende}</f:format.date></td>
 					<td>{member.dwz}<f:if condition="{member.dwzindex}"> - {member.dwzindex}</f:if></td>
 					<td>{member.fideelo}</td>

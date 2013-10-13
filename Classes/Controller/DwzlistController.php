@@ -95,6 +95,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		}
 		$this->fetchClubData($zps);
 		$this->view->assignMultiple(array(
+			'zps' => $zps,
 			'members' => $this->members,
 			'dateOfLastUpdate' => $this->dateOfLastUpdate
 		));
@@ -103,10 +104,11 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	/**
 	 * Show a member
 	 * @param string $pkz
+	 * @param string $zps The zps of the calling list
 	 * @param string $dateOfLastUpdate
 	 * @return void
 	 */
-	public function showAction($pkz = NULL, $dateOfLastUpdate = NULL) {
+	public function showAction($pkz = NULL, $zps = NULL, $dateOfLastUpdate = NULL) {
 		if ($pkz === NULL) {
 			$pkz = $this->settings['pkz'];
 		}
@@ -116,6 +118,7 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			'rang' => $this->member['rang'],
 			'mitgliedschaft' => $this->member['mitgliedschaft'],
 			'turniere' => $this->member['turnier'],
+			'zps' => $zps,
 			'dateOfLastUpdate' => $dateOfLastUpdate,
 			'dwzGraphData' => json_encode($this->dwzGraphData),
 			'performanceGraphData' => json_encode($this->performanceGraphData)
