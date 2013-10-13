@@ -58,12 +58,16 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	public function fetchClubData($zps) {
 		$this->members = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/verein.php?zps=' . $zps . '&format=array', 'r'));
 
-		foreach($this->members as $key => $row) {
-			$this->dateOfLastUpdate = max($this->dateOfLastUpdate, $row['turnierende']);
-			$dwz[$key]  = $row['dwz'];
-			$dwzIndex[$key]  = $row['dwzIndex'];
+		if ($this->members !== false) {
+			foreach($this->members as $key => $row) {
+				$this->dateOfLastUpdate = max($this->dateOfLastUpdate, $row['turnierende']);
+				$dwz[$key]  = $row['dwz'];
+				$dwzIndex[$key]  = $row['dwzIndex'];
+			}
+			array_multisort($dwz, SORT_DESC, SORT_NUMERIC, $this->members);
+		} else {
+			$this->members = unserialize(file_get_contents('http://www.schachbund.de/php/dewis/verband.php?zps=' . $zps . '&format=array', 'r'));
 		}
-		array_multisort($dwz, SORT_DESC, SORT_NUMERIC, $this->members);
 	}
 
 	/**
