@@ -86,10 +86,13 @@ class DwzlistController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	/**
 	 * List all members of a Club
 	 *
+	 * @param string $zps
 	 * @return void
 	 */
-	public function listAction() {
-		$zps = $this->settings['zps'];
+	public function listAction($zps = NULL) {
+		if ($zps === NULL) {
+			$zps = $this->settings['zps'];
+		}
 		$this->fetchClubData($zps);
 		$this->view->assignMultiple(array(
 			'members' => $this->members,
