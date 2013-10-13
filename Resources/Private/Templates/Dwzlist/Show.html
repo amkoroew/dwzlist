@@ -173,7 +173,26 @@
 		<f:link.external uri="http://ratings.fide.com/card.phtml?event={spieler.fideid}">FIDE Profil</f:link.external>
 		<br/></f:if>
 	<f:if condition="{spieler.fidenation}">Nationalität: {spieler.fidenation}<br /></f:if>
-	Historie: <f:link.external uri="http://altdwz.schachbund.de/db/spieler.html?zps={mitgliedschaft.0.zpsver}-{mitgliedschaft.0.zpsmgl}">Alte Karteikarte</f:link.external>
+	Historie: <f:link.external uri="http://altdwz.schachbund.de/db/spieler.html?zps={mitgliedschaft.0.zpsver}-{mitgliedschaft.0.zpsmgl}">Alte Karteikarte</f:link.external><br />
+
+	Ranglisten Platzierungen:
+	<table>
+		<thead>
+		<tr>
+			<th>Verband / Verein</th>
+			<th>Platz</th>
+		</tr>
+		</thead>
+		<tbody>
+			<f:for each="{rang}" as="r">
+				<tr>
+					<td>{r.organisation}</td>
+					<td>{r.rang}</td>
+				</tr>
+			</f:for>
+		</tbody>
+	</table>
+
 	<table>
 		<thead>
 		<tr>
