@@ -186,7 +186,7 @@
 		<tbody>
 			<f:for each="{rang}" as="r">
 				<tr>
-					<td>{r.organisation}</td>
+					<td><f:link.action action="list" arguments="{zps: r.zpsver}">{r.organisation}</f:link.action></td>
 					<td>{r.rang}</td>
 				</tr>
 			</f:for>
